@@ -53,9 +53,9 @@ def should_include_file(path: Path, include_all_extensions: bool) -> bool:
     # Otherwise, check if extension is in DEFAULT_INCLUDE_EXTENSIONS
     return include_all_extensions or path.suffix.lower() in DEFAULT_INCLUDE_EXTENSIONS
 
-def get_safe_filename(path: str) -> str:
-    """Convert a path to a safe filename by replacing slashes with double underscores."""
-    return path.replace('/', '__')
+def encode_path_as_filename(path: str) -> str:
+    """Convert a file path into a filename that preserves the path structure."""
+    return path.replace('/', FILENAME_PATH_SEPARATOR)
 
 def flatten_repository(source_dir: Path, include_all_extensions: bool = False) -> None:
     """Flatten a repository's structure into a single directory with path-preserving filenames.
@@ -73,7 +73,7 @@ def flatten_repository(source_dir: Path, include_all_extensions: bool = False) -
     # Convert to absolute path and resolve any symlinks
     source_dir = source_dir.resolve()
     
-    # Create output directory name based on source directory
+    # Create output directory as a sibling directory to the source directory
     output_dir = source_dir.with_name(f"{source_dir.name}_flat")
     output_dir.mkdir(exist_ok=True)
     
@@ -85,31 +85,26 @@ def flatten_repository(source_dir: Path, include_all_extensions: bool = False) -
         if file_path.is_dir():
             continue
             
-        # Skip files in the output directory
-        if output_dir in file_path.parents:
-            continue
-            
         if not should_include_file(file_path, include_all_extensions):
             continue
         
         # Create new filename using original path
         rel_path = str(file_path.relative_to(source_dir))
-        display_name = rel_path  # Keep the original path for display
-        safe_name = get_safe_filename(rel_path)  # Convert to safe filename
+        flat_filename = encode_path_as_filename(rel_path)
         
         # Check for collisions
-        if safe_name in processed_files:
-            print(f"Warning: Duplicate file name detected: {display_name}", file=sys.stderr)
+        if flat_filename in processed_files:
+            print(f"Warning: Duplicate file name detected: {rel_path}", file=sys.stderr)
             continue
             
-        processed_files.add(safe_name)
+        processed_files.add(flat_filename)
         
         # Copy file to output directory
         try:
-            shutil.copy2(file_path, output_dir / safe_name)
-            print(f"Copied: {display_name}")
+            shutil.copy2(file_path, output_dir / flat_filename)
+            print(f"Copied: {rel_path}")
         except Exception as e:
-            print(f"Error copying {display_name}: {e}", file=sys.stderr)
+            print(f"Error copying {rel_path}: {e}", file=sys.stderr)
 
 def main():
     parser = argparse.ArgumentParser(
