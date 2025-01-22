@@ -28,8 +28,8 @@ EXCLUDED_EXTENSIONS = {
     '.map'  # Source maps
 }
 
-# Default include extensions for Python/JavaScript projects
-DEFAULT_INCLUDE_EXTENSIONS = {
+# Default included extensions for Python/JavaScript projects
+DEFAULT_INCLUDED_EXTENSIONS = {
     '.py', '.js', '.jsx', '.ts', '.tsx',  # Source code
     '.json', '.yaml', '.yml', '.toml',    # Config files
     '.md', '.txt', '.rst'                 # Documentation
@@ -49,9 +49,9 @@ def should_include_file(path: Path, include_all_extensions: bool) -> bool:
     if path.suffix.lower() in EXCLUDED_EXTENSIONS:
         return False
         
-    # If include_all_extensions is True, include all non-excluded files
-    # Otherwise, check if extension is in DEFAULT_INCLUDE_EXTENSIONS
-    return include_all_extensions or path.suffix.lower() in DEFAULT_INCLUDE_EXTENSIONS
+    # If include_all_extensions is True, include all non-excluded extensions
+    # Otherwise, check if extension is in DEFAULT_INCLUDED_EXTENSIONS
+    return include_all_extensions or path.suffix.lower() in DEFAULT_INCLUDED_EXTENSIONS
 
 def encode_path_as_filename(path: str) -> str:
     """Convert a file path into a filename that preserves the path structure."""
@@ -68,7 +68,7 @@ def flatten_repository(source_dir: Path, include_all_extensions: bool = False) -
         source_dir: Path to the directory to flatten
         include_all_extensions: If True, includes all files regardless of their extension
             (except those explicitly excluded). If False, only includes files with
-            extensions listed in DEFAULT_INCLUDE_EXTENSIONS.
+            extensions listed in DEFAULT_INCLUDED_EXTENSIONS.
     """
     # Convert to absolute path and resolve any symlinks
     source_dir = source_dir.resolve()
