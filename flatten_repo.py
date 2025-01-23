@@ -22,10 +22,8 @@ EXCLUDED_FILES = {
 }
 
 EXCLUDED_EXTENSIONS = {
-    '.pyc', '.pyo',  # Python bytecode
-    '.jpg', '.jpeg', '.png', '.gif', '.ico', '.svg',  # Images
-    '.pdf', '.lock', '.log',  # Other binary/lock files
-    '.map'  # Source maps
+    '.pyc', '.pyo', '.lock', '.log', '.map', '.pdf', '.jpg', '.jpeg', '.png',
+    '.gif', '.ico', '.svg',
 }
 
 # Default included extensions for Python/JavaScript projects

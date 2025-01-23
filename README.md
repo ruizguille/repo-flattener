@@ -1,6 +1,6 @@
 # Repository Flattener
 
-A utility script that flattens a repository's structure into a single directory while preserving path information in filenames. Perfect for providing context to LLM tools (like Claude Projects or ChatGPT) when analyzing your codebase.
+A utility script that flattens a repository's structure into a single directory while preserving path information in filenames. Perfect for providing context to LLM applications (like Claude Projects or ChatGPT) when analyzing your codebase.
 
 Instead of uploading files one by one and explaining your project structure, this script creates a flattened version of your repository where all files are in a single directory, with their original paths encoded in the filenames.
 
