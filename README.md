@@ -25,7 +25,7 @@ my-app_flat/
 
 Now you can easily drag and drop these files into your favorite LLM tool while preserving the original structure information!
 
-For a detailed walkthrough of the code and the technologies used, check out this blog post: []()
+For a more detailed walkthrough of the code, check out this blog post: [This Script Makes Sharing Code with Claude Projects and ChatGPT 10x Faster](https://codeawake.com/blog/repo-flattener).
 
 ## Configuration
 
@@ -47,8 +47,8 @@ python flatten_repo.py /path/to/your/project
 ```
 
 Arguments:
-- Path to the directory you want to flatten (optional, defaults to current directory)
-- `--include-all` flag to include all file extensions except those explicitly excluded
+- Path to the directory you want to flatten (optional, defaults to current directory).
+- `--include-all` flag to include all file extensions except those explicitly excluded.
 
 ## Global Command Setup
 
@@ -64,6 +64,6 @@ For more convenient usage, you can make the script available as a global command
     ln -s /path/to/flatten_repo.py /usr/local/bin/flatten-repo
     ```
 
-Now you can run `flatten-repo` from any directory!
+Now you can run `flatten-repo` from any repository!
 
 *On Windows, you need to either add the script’s folder to your PATH or create a batch file that calls the script.*
